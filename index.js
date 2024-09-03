@@ -47,5 +47,9 @@ const user = require("./routes/users");
 app.use("/", router);
 app.use("/api/users", user);
 
+app.get("/", (req, res) =>{
+  res.send("dast the server")
+})
+
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));
