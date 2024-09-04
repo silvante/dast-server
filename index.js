@@ -42,14 +42,16 @@ app.delete("/file/:filename", async (req, res) => {
 // requiring routes
 const { router } = require("./routes/extraRoutes");
 const user = require("./routes/users");
+const collection = require("./routes/collection");
 
 // using routes
 app.use("/", router);
 app.use("/api/users", user);
+app.use("/api/collections", collection);
 
-app.get("/", (req, res) =>{
-  res.send("dast the server")
-})
+app.get("/", (req, res) => {
+  res.send("dast the server");
+});
 
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));

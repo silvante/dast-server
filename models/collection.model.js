@@ -5,6 +5,11 @@ const collectionSchema = mongoose.Schema({
     required: true,
     type: String,
   },
+  description: {
+    required: false,
+    type: String,
+    maxlength: 240,
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
