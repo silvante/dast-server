@@ -50,7 +50,7 @@ const follow = require("./routes/follows");
 app.use("/", router);
 app.use("/api/users", user);
 app.use("/api/collections", collection);
-// app.use("/api/posts", post);
+app.use("/api/posts", post);
 app.use("/system/follows", follow);
 
 app.get("/", (req, res) => {
