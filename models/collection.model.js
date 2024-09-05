@@ -21,6 +21,10 @@ const collectionSchema = mongoose.Schema({
   icon: {
     type: String,
   },
+  created_at: {
+    type: Date,
+    default: Date.now, // Automatically sets the current date when the document is created
+  },
 });
 
 const Collection = mongoose.model("collection", collectionSchema);

@@ -25,6 +25,10 @@ const postSchema = mongoose.Schema({
     ref: "user",
     required: true,
   },
+  created_at: {
+    type: Date,
+    default: Date.now, // Automatically sets the current date when the document is created
+  },
 });
 
 const Post = mongoose.model("post", postSchema);

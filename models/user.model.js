@@ -35,6 +35,10 @@ const userSchame = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  created_at: {
+    type: Date,
+    default: Date.now, // Automatically sets the current date when the document is created
+  },
 });
 
 const User = mongoose.model("user", userSchame);
