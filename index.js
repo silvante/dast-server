@@ -43,11 +43,13 @@ app.delete("/file/:filename", async (req, res) => {
 const { router } = require("./routes/extraRoutes");
 const user = require("./routes/users");
 const collection = require("./routes/collection");
+const post = require("./routes/post");
 
 // using routes
 app.use("/", router);
 app.use("/api/users", user);
 app.use("/api/collections", collection);
+app.use("/api/posts", post);
 
 app.get("/", (req, res) => {
   res.send("dast the server");

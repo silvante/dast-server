@@ -74,20 +74,25 @@ const editCollection = async (req, res) => {
       } else {
         jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
           if (err) throw err;
-          if (collection.owner !== userDoc.id) {
-            res.status(404).send("this collection is not yours");
-          } else {
-            try {
-              const { banner, icon, title, description } = req.body;
-              const edited = await Collection.findByIdAndUpdate(
-                collection._id,
-                { banner, icon, title, description }
-              );
-              res.status(202).send(editCollection);
-            } catch (error) {
-              console.log(error);
-              res.json(error);
+          try {
+            if (collection.owner !== userDoc.id) {
+              res.status(404).send("this collection is not yours");
+            } else {
+              try {
+                const { banner, icon, title, description } = req.body;
+                const edited = await Collection.findByIdAndUpdate(
+                  collection._id,
+                  { banner, icon, title, description }
+                );
+                res.status(202).send(editCollection);
+              } catch (error) {
+                console.log(error);
+                res.json(error);
+              }
             }
+          } catch (error) {
+            console.log(error);
+            res.send(error);
           }
         });
       }
@@ -111,11 +116,16 @@ const deleteCollection = async (req, res) => {
     } else {
       jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
         if (err) throw err;
-        if (collection._id !== userDoc.id) {
-          res.status(404).send("this is not your collection");
-        } else {
-          const deleted = await Collection.findByIdAndDelete(collection._id);
-          res.status(203).send(deleted);
+        try {
+          if (collection.owner !== userDoc.id) {
+            res.status(404).send("this is not your collection");
+          } else {
+            const deleted = await Collection.findByIdAndDelete(collection._id);
+            res.status(203).send(deleted);
+          }
+        } catch (error) {
+          console.log(error);
+          res.send(error);
         }
       });
     }
