@@ -28,9 +28,6 @@ const userSchame = mongoose.Schema({
   bio: {
     type: String,
   },
-  mobile: {
-    type: String,
-  },
   check: {
     type: Boolean,
     default: false,

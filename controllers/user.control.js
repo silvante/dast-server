@@ -50,7 +50,6 @@ const addUser = async (req, res) => {
       password,
       avatar,
       verificated,
-      mobile,
     } = req.body;
 
     const existingEmail = await User.find({ email });
@@ -72,7 +71,6 @@ const addUser = async (req, res) => {
         password: bcryptjs.hashSync(password, cyfer),
         avatar,
         verificated,
-        mobile,
       });
       newUser.save().then((result) => {
         sendOTPverification(result, res);
@@ -98,7 +96,6 @@ const editUser = async (req, res) => {
       avatar,
       bio,
       email,
-      mobile,
       check,
     } = req.body;
     const editedUser = await User.findByIdAndUpdate(id, {
@@ -109,7 +106,6 @@ const editUser = async (req, res) => {
       avatar,
       bio,
       email,
-      mobile,
       check,
     });
     return res.status(202).send(editedUser);
