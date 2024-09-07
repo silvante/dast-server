@@ -47,6 +47,9 @@ const post = require("./routes/post");
 const follow = require("./routes/follows");
 const save = require("./routes/saves");
 
+// admin part
+const admin_main = require("./routes/admin");
+
 // using routes
 app.use("/", router);
 app.use("/api/users", user);
@@ -54,6 +57,9 @@ app.use("/api/collections", collection);
 app.use("/api/posts", post);
 app.use("/system/follows", follow);
 app.use("/system/saves", save);
+
+// admin use
+app.use("/admin/panel");
 
 app.get("/", (req, res) => {
   res.send("dast the server");
