@@ -37,7 +37,7 @@ router.post("/login", async (req, res) => {
 // profile part codes
 router.get("/profile", async (req, res) => {
   try {
-    const token = req.header("Authorization").replace("Bearer ", "");
+    const token = req.headers.authorization.split("Bearer")[1];
     if (token) {
       try {
         jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
