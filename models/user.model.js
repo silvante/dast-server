@@ -1,4 +1,9 @@
 const mongoose = require("mongoose");
+const Post = require("./post.model");
+const Likes = require("./like.model");
+const Saves = require("./saves.model");
+const Follow = require("./follow.model");
+const Collection = require("./collection.model");
 
 const userSchame = mongoose.Schema({
   name: {
@@ -36,6 +41,56 @@ const userSchame = mongoose.Schema({
     type: Date,
     default: Date.now, // Automatically sets the current date when the document is created
   },
+});
+
+userSchame.pre("remove", async function (next) {
+  try {
+    const user = this._id;
+
+    await Saves.deleteMany({ saver: user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+userSchame.pre("remove", async function (next) {
+  try {
+    const user = this._id;
+
+    await Post.deleteMany({ creator: user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+userSchame.pre("remove", async function (next) {
+  try {
+    const user = this._id;
+
+    await Likes.deleteMany({ liked_by: user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+userSchame.pre("remove", async function (next) {
+  try {
+    const user = this._id;
+
+    await Follow.deleteMany({ follower: user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+userSchame.pre("remove", async function (next) {
+  try {
+    const user = this._id;
+
+    await Collection.deleteMany({ owner: user });
+  } catch (error) {
+    next(error);
+  }
 });
 
 const User = mongoose.model("user", userSchame);

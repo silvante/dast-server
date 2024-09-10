@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Saves = require("./saves.model");
+const Post = require("./post.model");
 
 const collectionSchema = mongoose.Schema({
   title: {
@@ -32,11 +33,20 @@ collectionSchema.pre("remove", async function (next) {
   try {
     const collection = this._id;
 
-    await Saves.deleteMany({ post: collection });
+    await Saves.deleteMany({ collection });
   } catch (error) {
     next(error);
   }
 });
 
+collectionSchema.pre("remove", async function (next) {
+  try {
+    const collection = this._id;
+
+    await Post.updateMany({ collection }, { collection: "deleted" });
+  } catch (error) {
+    next(error);
+  }
+});
 const Collection = mongoose.model("collection", collectionSchema);
 module.exports = Collection;
