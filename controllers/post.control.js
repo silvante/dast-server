@@ -4,7 +4,7 @@ const { jwtSecret } = require("../routes/extraRoutes");
 
 const getPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().populate("creator").populate("multitude");
     if (!posts) {
       res.status(404).send("post are not defined");
     }
@@ -52,7 +52,7 @@ const createPost = async (req, res) => {
         try {
           const { title, multitude, image, description } = req.body;
           const new_post = await Post.create({
-            owner: userDoc.id,
+            creator: userDoc.id,
             title,
             multitude,
             image,

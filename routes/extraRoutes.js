@@ -34,14 +34,23 @@ router.post("/login", async (req, res) => {
   res.send(token);
 });
 
-// profile part codes
 router.get("/profile", async (req, res) => {
   try {
-    const token = req.headers.authorization.split("Bearer")[1];
-    if (token) {
-      try {
-        jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
-          if (err) throw err;
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      const token = authHeader.split("Bearer ")[1];
+
+      jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
+        if (err) {
+          return res.status(401).json({ message: "Invalid token" });
+        }
+
+        try {
+          const user = await User.findById(userDoc.id);
+          if (!user) {
+            return res.status(404).json({ message: "User not found" });
+          }
+
           const {
             _id,
             email,
@@ -51,7 +60,7 @@ router.get("/profile", async (req, res) => {
             avatar,
             verificated,
             check,
-          } = await User.findById(userDoc.id);
+          } = user;
           res.json({
             _id,
             email,
@@ -62,17 +71,17 @@ router.get("/profile", async (req, res) => {
             verificated,
             check,
           });
-        });
-      } catch (error) {
-        console.log(err);
-        res.send(err);
-      }
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: "Server error" });
+        }
+      });
     } else {
-      res.json(null);
+      res.status(401).json({ message: "No token provided" });
     }
   } catch (err) {
     console.log(err);
-    res.send(err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 

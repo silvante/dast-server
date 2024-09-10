@@ -4,7 +4,7 @@ const { jwtSecret } = require("../routes/extraRoutes");
 
 const getMultitudes = async (req, res) => {
   try {
-    const multitudes = await Multitude.find();
+    const multitudes = await Multitude.find().populate("owner");
     if (!multitudes) {
       res.status(404).send("collectons do not exsist");
     }
@@ -18,7 +18,7 @@ const getMultitudes = async (req, res) => {
 const getMultitude = async (req, res) => {
   const id = req.params.id;
   try {
-    const multitude = await Multitude.findById(id);
+    const multitude = await Multitude.findById(id).populate("owner");
     if (!multitude) {
       res.status(404).send("multitude does not exsist");
     }
