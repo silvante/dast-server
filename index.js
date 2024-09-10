@@ -42,7 +42,7 @@ app.delete("/file/:filename", async (req, res) => {
 // requiring routes
 const { router } = require("./routes/extraRoutes");
 const user = require("./routes/users");
-const collection = require("./routes/collection");
+const multitude = require("./routes/multitude");
 const post = require("./routes/post");
 const follow = require("./routes/follows");
 const save = require("./routes/saves");
@@ -53,7 +53,7 @@ const admin_main = require("./routes/admin");
 // using routes
 app.use("/", router);
 app.use("/api/users", user);
-app.use("/api/collections", collection);
+app.use("/api/multitude", multitude);
 app.use("/api/posts", post);
 app.use("/system/follows", follow);
 app.use("/system/saves", save);

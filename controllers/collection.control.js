@@ -1,35 +1,35 @@
-const Collection = require("../models/collection.model");
+const Multitude = require("../models/multitude.model");
 const jwt = require("jsonwebtoken");
 const { jwtSecret } = require("../routes/extraRoutes");
 
-const getCollections = async (req, res) => {
+const getMultitudes = async (req, res) => {
   try {
-    const collections = await Collection.find();
-    if (!collections) {
+    const multitudes = await Multitude.find();
+    if (!multitudes) {
       res.status(404).send("collectons do not exsist");
     }
-    res.status(200).send(collections);
+    res.status(200).send(multitudes);
   } catch (error) {
     console.log(error);
     res.json(error);
   }
 };
 
-const getCollection = async (req, res) => {
+const getMultitude = async (req, res) => {
   const id = req.params.id;
   try {
-    const collection = await Collection.findById(id);
-    if (!collection) {
-      res.status(404).send("collection does not exsist");
+    const multitude = await Multitude.findById(id);
+    if (!multitude) {
+      res.status(404).send("multitude does not exsist");
     }
-    res.status(200).send(collection);
+    res.status(200).send(multitude);
   } catch (error) {
     console.log(error);
     res.json(error);
   }
 };
 
-const addCollection = async (req, res) => {
+const addMultitude = async (req, res) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
     if (!token) {
@@ -41,14 +41,14 @@ const addCollection = async (req, res) => {
         }
         try {
           const { title, description, banner, icon } = req.body;
-          const newCollection = await Collection.create({
+          const newMultitude = await Multitude.create({
             title,
             description,
             banner,
             icon,
             owner: userDoc.id,
           });
-          res.status(201).send(newCollection);
+          res.status(201).send(newMultitude);
         } catch (error) {
           console.log(error);
           res.send(error);
@@ -61,30 +61,30 @@ const addCollection = async (req, res) => {
   }
 };
 
-const editCollection = async (req, res) => {
+const editMultitude = async (req, res) => {
   const id = req.params.id;
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
     if (!token) {
       res.status(404).send("login first...");
     } else {
-      const collection = await Collection.findById(id);
-      if (!collection) {
-        res.status(404).send("collection does not exsist");
+      const multitude = await Multitude.findById(id);
+      if (!multitude) {
+        res.status(404).send("multitude does not exsist");
       } else {
         jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
           if (err) throw err;
           try {
-            if (collection.owner !== userDoc.id) {
-              res.status(404).send("this collection is not yours");
+            if (multitude.owner !== userDoc.id) {
+              res.status(404).send("this multitude is not yours");
             } else {
               try {
                 const { banner, icon, title, description } = req.body;
-                const edited = await Collection.findByIdAndUpdate(
-                  collection._id,
+                const edited = await Multitude.findByIdAndUpdate(
+                  multitude._id,
                   { banner, icon, title, description }
                 );
-                res.status(202).send(editCollection);
+                res.status(202).send(edited);
               } catch (error) {
                 console.log(error);
                 res.json(error);
@@ -103,13 +103,13 @@ const editCollection = async (req, res) => {
   }
 };
 
-const deleteCollection = async (req, res) => {
+const deleteMultitude = async (req, res) => {
   const id = req.params.id;
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
-    const collection = await Collection.findById(id);
-    if (!collection) {
-      res.status(404).send("collection does not exsist");
+    const multitude = await Multitude.findById(id);
+    if (!multitude) {
+      res.status(404).send("multitude does not exsist");
     }
     if (!token) {
       res.status(404).send("login first");
@@ -117,10 +117,10 @@ const deleteCollection = async (req, res) => {
       jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
         if (err) throw err;
         try {
-          if (collection.owner !== userDoc.id) {
-            res.status(404).send("this is not your collection");
+          if (multitude.owner !== userDoc.id) {
+            res.status(404).send("this is not your multitude");
           } else {
-            const deleted = await Collection.findByIdAndDelete(collection._id);
+            const deleted = await Multitude.findByIdAndDelete(multitude._id);
             res.status(203).send(deleted);
           }
         } catch (error) {
@@ -136,9 +136,9 @@ const deleteCollection = async (req, res) => {
 };
 
 module.exports = {
-  getCollections,
-  getCollection,
-  addCollection,
-  editCollection,
-  deleteCollection,
+  getMultitudes,
+  getMultitude,
+  addMultitude,
+  editMultitude,
+  deleteMultitude,
 };

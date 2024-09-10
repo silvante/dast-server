@@ -1,25 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getCollections,
-  getCollection,
-  addCollection,
-  editCollection,
-  deleteCollection,
-} = require("../controllers/collection.control");
+  getMultitudes,
+  getMultitude,
+  addMultitude,
+  editMultitude,
+  deleteMultitude,
+} = require("../controllers/multitude.control");
 
-// get all the collections
-router.get("/", getCollections);
+// get all the multitudes
+router.get("/", getMultitudes);
 
-// get collections by id
-router.get("/:id", getCollection);
+// get multitude by id
+router.get("/:id", getMultitude);
 
-// add collection
-router.post("/", addCollection);
+// add multitude
+router.post("/", addMultitude);
 
-// edit collection by id
-router.put("/:id", editCollection);
+// edit multitude by id
+router.put("/:id", editMultitude);
 
-// delete collection by id
-router.delete("/:id", deleteCollection);
+// delete multitude by id
+router.delete("/:id", deleteMultitude);
 module.exports = router;

@@ -50,11 +50,11 @@ const createPost = async (req, res) => {
       jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
         if (err) throw err;
         try {
-          const { title, collection_id, image, description } = req.body;
+          const { title, multitude, image, description } = req.body;
           const new_post = await Post.create({
             owner: userDoc.id,
             title,
-            collection_id,
+            multitude,
             image,
             description,
           });
@@ -91,11 +91,11 @@ const editPost = async (req, res) => {
           res.status(404).send("this post is not yours");
         } else {
           try {
-            const { title, desctiption, collection_id } = req.body();
+            const { title, desctiption, multitude } = req.body();
             const edited_post = await Post.findByIdAndUpdate(post._id, {
               title,
               desctiption,
-              collection_id,
+              multitude,
             });
             if (!edited_post) {
               res.status(404).send("editing editing...");

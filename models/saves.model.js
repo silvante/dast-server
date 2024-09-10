@@ -5,9 +5,9 @@ const saveSchama = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "post",
   },
-  collection: {
+  multitude: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "collection",
+    ref: "multitude",
   },
   saver: {
     type: mongoose.Schema.Types.ObjectId,

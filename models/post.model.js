@@ -17,10 +17,10 @@ const postSchema = mongoose.Schema({
     required: true,
     maxlength: 200,
   },
-  collection_id: {
+  multitude: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "collection",
+    ref: "multitude",
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,

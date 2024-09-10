@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Saves = require("./saves.model");
 const Post = require("./post.model");
 
-const collectionSchema = mongoose.Schema({
+const multitudeSchema = mongoose.Schema({
   title: {
     required: true,
     type: String,
@@ -29,24 +29,24 @@ const collectionSchema = mongoose.Schema({
   },
 });
 
-collectionSchema.pre("remove", async function (next) {
+multitudeSchema.pre("remove", async function (next) {
   try {
-    const collection = this._id;
+    const multitude = this._id;
 
-    await Saves.deleteMany({ collection });
+    await Saves.deleteMany({ multitude });
   } catch (error) {
     next(error);
   }
 });
 
-collectionSchema.pre("remove", async function (next) {
+multitudeSchema.pre("remove", async function (next) {
   try {
-    const collection = this._id;
+    const multitude = this._id;
 
-    await Post.updateMany({ collection }, { collection: "deleted" });
+    await Post.updateMany({ multitude }, { multitude: "deleted" });
   } catch (error) {
     next(error);
   }
 });
-const PostCollection = mongoose.model("post_collection", collectionSchema);
-module.exports = PostCollection;
+const Multitude = mongoose.model("multitude", multitudeSchema);
+module.exports = Multitude;

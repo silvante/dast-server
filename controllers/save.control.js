@@ -29,7 +29,7 @@ const savePost = async (req, res) => {
   }
 };
 
-const saveCollection = async (req, res) => {
+const saveMultitude = async (req, res) => {
   const id = req.params.id;
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
@@ -40,7 +40,7 @@ const saveCollection = async (req, res) => {
         if (err) throw err;
         try {
           const saved = await Saves.create({
-            collection: id,
+            multitude: id,
             saver: userdoc.id,
           });
           res.status(201).send(saved);
@@ -104,4 +104,4 @@ const getMysaves = async (req, res) => {
   }
 };
 
-module.exports = { savePost, unsavePost, getMysaves, saveCollection };
+module.exports = { savePost, unsavePost, getMysaves, saveMultitude };

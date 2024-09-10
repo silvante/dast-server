@@ -47,22 +47,20 @@ router.get("/profile", async (req, res) => {
             email,
             username,
             name,
-            mobile,
-            telegram,
             bio,
             avatar,
             verificated,
+            check,
           } = await User.findById(userDoc.id);
           res.json({
             _id,
             email,
             username,
             name,
-            mobile,
-            telegram,
             bio,
             avatar,
             verificated,
+            check,
           });
         });
       } catch (error) {
