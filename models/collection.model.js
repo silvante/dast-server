@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Saves = require("./saves.model");
 
 const collectionSchema = mongoose.Schema({
   title: {
@@ -25,6 +26,16 @@ const collectionSchema = mongoose.Schema({
     type: Date,
     default: Date.now, // Automatically sets the current date when the document is created
   },
+});
+
+collectionSchema.pre("remove", async function (next) {
+  try {
+    const collection = this._id;
+
+    await Saves.deleteMany({ post: collection });
+  } catch (error) {
+    next(error);
+  }
 });
 
 const Collection = mongoose.model("collection", collectionSchema);

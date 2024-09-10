@@ -29,6 +29,33 @@ const savePost = async (req, res) => {
   }
 };
 
+const saveCollection = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const token = req.header("Authorization").replace("Bearer ", "");
+    if (!token) {
+      req.status(404).send("login first...");
+    } else {
+      jwt.verify(token, jwtSecret, {}, async (err, userdoc) => {
+        if (err) throw err;
+        try {
+          const saved = await Saves.create({
+            collection: id,
+            saver: userdoc.id,
+          });
+          res.status(201).send(saved);
+        } catch (error) {
+          console.log(err);
+          res.send(error);
+        }
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+};
+
 const unsavePost = async (req, res) => {
   const id = req.params.id;
   try {
@@ -77,4 +104,4 @@ const getMysaves = async (req, res) => {
   }
 };
 
-module.exports = { savePost, unsavePost, getMysaves };
+module.exports = { savePost, unsavePost, getMysaves, saveCollection };

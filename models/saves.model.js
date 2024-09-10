@@ -3,8 +3,11 @@ const mongoose = require("mongoose");
 const saveSchama = mongoose.Schema({
   post: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
     ref: "post",
+  },
+  collection: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "collection",
   },
   saver: {
     type: mongoose.Schema.Types.ObjectId,

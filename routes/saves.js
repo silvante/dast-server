@@ -4,10 +4,14 @@ const {
   savePost,
   unsavePost,
   getMysaves,
+  saveCollection,
 } = require("../controllers/save.control");
 
 // save post by id
-router.post("/:id", savePost);
+router.post("/post/:id", savePost);
+
+// save collection by id
+router.post("/collection/:id", saveCollection);
 
 // delete save by id
 router.delete("/:id", unsavePost);
