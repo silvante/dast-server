@@ -17,7 +17,7 @@ const getPosts = async (req, res) => {
 
 const getMyPosts = async (req, res) => {
   try {
-    const token = req.header("Authorization").replace("Bearer ", "");
+    const token = req.header("Authorization").replace("Bearer", "");
     if (!token) {
       res.status(404).send("login first...");
     } else {
