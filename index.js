@@ -59,7 +59,7 @@ app.use("/system/follows", follow);
 app.use("/system/saves", save);
 
 // admin use
-app.use("/admin/panel");
+app.use("/admin/panel", admin_main);
 
 app.get("/", (req, res) => {
   res.send("dast the server");

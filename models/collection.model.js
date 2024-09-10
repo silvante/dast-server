@@ -48,5 +48,5 @@ collectionSchema.pre("remove", async function (next) {
     next(error);
   }
 });
-const Collection = mongoose.model("collection", collectionSchema);
-module.exports = Collection;
+const PostCollection = mongoose.model("post_collection", collectionSchema);
+module.exports = PostCollection;

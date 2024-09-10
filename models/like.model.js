@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const likeSchama = mongoose({
+const likeSchama = mongoose.Schema({
   post: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "post",
