@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Saves = require("./saves.model");
 const Likes = require("./like.model");
+const Comment = require("./comment.model");
 
 const postSchema = mongoose.Schema({
   title: {
@@ -52,6 +53,19 @@ postSchema.pre("remove", async function (next) {
 
     // Delete all saved entries referencing the deleted post
     await Likes.deleteMany({ post });
+
+    next(); // Continue with the deletion process
+  } catch (error) {
+    next(error); // Handle any errors during the process
+  }
+});
+
+postSchema.pre("remove", async function (next) {
+  try {
+    const post = this._id;
+
+    // Delete all saved entries referencing the deleted post
+    await Comment.deleteMany({ post_id: post });
 
     next(); // Continue with the deletion process
   } catch (error) {

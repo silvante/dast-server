@@ -4,6 +4,7 @@ const Likes = require("./like.model");
 const Saves = require("./saves.model");
 const Follow = require("./follow.model");
 const Multitude = require("./multitude.model");
+const Comment = require("./comment.model");
 
 const userSchame = mongoose.Schema({
   name: {
@@ -88,6 +89,16 @@ userSchame.pre("remove", async function (next) {
     const user = this._id;
 
     await Multitude.deleteMany({ owner: user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+userSchame.pre("remove", async function (next) {
+  try {
+    const user = this._id;
+
+    await Comment.deleteMany({ author: user });
   } catch (error) {
     next(error);
   }
