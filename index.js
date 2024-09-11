@@ -72,8 +72,8 @@ app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
   res.render("index", {
-    title: "My First View",
-    message: "Hello from Node.js!",
+    title: "Dast server",
+    message: "server side for web site Dast!",
   });
 });
 

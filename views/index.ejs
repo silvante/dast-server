@@ -4,23 +4,105 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      rel="icon"
-      type="image/jpg"
-      href="https://img.freepik.com/free-vector/gradient-quill-pen-logo-design-template_23-2149878682.jpg?size=338&ext=jpg&ga=GA1.1.1413502914.1726012800&semt=ais_hybrid"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
     />
-    <title>dast server</title>
+    <title>dast_server</title>
   </head>
   <body>
-    <main>
+    <div class="container">
       <header>
-        <p>my server</p>
-        <a href="https://silvante.netlify.app">authors portfolio</a>
+        <h1><%= title %></h1>
+        <nav>
+          <ul>
+            <li><a class="nav_links" href="/api/users">user →</a></li>
+            <li><a class="nav_links" href="/api/posts">post →</a></li>
+            <li><a class="nav_links" href="/api/multitude">multitude →</a></li>
+          </ul>
+        </nav>
       </header>
-      <h1 class="title"><%= title %></h1>
-      <footer>
-        <p>my server</p>
-        <a href="https://silvante.netlify.app">authors portfolio</a>
-      </footer>
-    </main>
+      <main>
+        <section class="hero">
+          <h2><%= message %></h2>
+          <a class="href-github" href="https://github.com/silvante/dast-server"
+            >open github codes <i class="bx bxl-github font_bold"></i
+          ></a>
+          <p>
+            author is Mardonbek Khamidov
+            <a href="https://github.com/silvante">__github</a>
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: "Arial", sans-serif;
+        background: #f4ede9; /* Adjust based on exact color */
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+      }
+
+      nav ul li {
+        margin-left: 20px;
+      }
+
+      .hero {
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .href-github {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: 1px, solid, black;
+        text-decoration: none;
+        color: black;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+
+      .href-github:hover {
+        border: 1px, solid, black;
+        background: #000;
+        color: white;
+      }
+
+      .font_bold {
+        font-size: 25px;
+      }
+
+      .nav_links {
+        text-decoration: none;
+        color: black;
+      }
+    </style>
   </body>
 </html>
