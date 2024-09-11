@@ -59,8 +59,6 @@ app.use("/api/posts", post);
 app.use("/system/follows", follow);
 app.use("/system/saves", save);
 
-app.use(express.static("public"));
-
 // admin use
 app.use("/admin/panel", admin_main);
 
