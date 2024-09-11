@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const connection = require("./db");
 const express = require("express");
 const app = express();
+const path = require("path");
 
 let gfs;
 connection();
@@ -58,11 +59,22 @@ app.use("/api/posts", post);
 app.use("/system/follows", follow);
 app.use("/system/saves", save);
 
+app.use(express.static("public"));
+
 // admin use
 app.use("/admin/panel", admin_main);
 
+// Set the view engine to EJS
+app.set("view engine", "ejs");
+
+// Specify the directory for view files
+app.set("views", path.join(__dirname, "views"));
+
 app.get("/", (req, res) => {
-  res.send("dast the server");
+  res.render("index", {
+    title: "My First View",
+    message: "Hello from Node.js!",
+  });
 });
 
 const port = process.env.PORT || 8080;
