@@ -42,6 +42,10 @@ const userSchame = mongoose.Schema({
     type: Date,
     default: Date.now, // Automatically sets the current date when the document is created
   },
+  balance: {
+    type: Number,
+    default: 120,
+  },
 });
 
 userSchame.pre("remove", async function (next) {

@@ -1,10 +1,16 @@
 const Likes = require("../models/like.model");
 const jwt = require("jsonwebtoken");
 const { jwtSecret } = require("../routes/extraRoutes");
+const Post = require("../models/post.model");
+const User = require("../models/user.model");
 
+
+// will add coin when likes ("wallet_system")
 const likePostById = async (req, res) => {
   const id = req.params.id;
   try {
+    const post = await Post.findById(id);
+    const the_user = await User.findById(post.creator);
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith("Bearer ")) {
       const token = authHeader.split("Bearer ")[1];
@@ -18,6 +24,16 @@ const likePostById = async (req, res) => {
           const new_like = await Likes.create({
             post: id,
             liked_by: userDoc.id,
+          });
+
+          if (!the_user) {
+            res.send(404).send("user not found");
+          }
+
+          const new_balance = the_user.balance + 4;
+
+          await User.findByIdAndUpdate(the_user._id, {
+            balance: new_balance,
           });
 
           res.status(201).send(new_like);
