@@ -62,7 +62,7 @@ const buyProduct = async (req, res) => {
             req.status(404).send("product is not defined");
           }
           const the_user = await User.find({ _id: userDoc.id });
-          const B = product.buyers.includes(userDoc.id);
+          const B = product.buyers.includes(the_user._id);
 
           if (the_user.balance < product.cost) {
             res.send("you have no enoght coins");
@@ -73,9 +73,7 @@ const buyProduct = async (req, res) => {
           if (!B) {
             const added = await Product.findByIdAndUpdate(
               product._id,
-              {
-                $push: { buyers: userDoc.id },
-              },
+              { $push: { buyers: the_user._id } },
               { new: true }
             );
             await User.findByIdAndUpdate(the_user._id, {
@@ -105,4 +103,62 @@ const buyProduct = async (req, res) => {
   }
 };
 
-module.exports = {};
+const sellProduct = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      const token = authHeader.split("Bearer ")[1];
+
+      jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
+        if (err) {
+          return res.status(401).json({ message: "Invalid token" });
+        }
+
+        try {
+          const product = await Product.findById(id);
+          if (!product) {
+            req.status(404).send("product is not defined");
+          }
+          const the_user = await User.find({ _id: userDoc.id });
+          const B = product.buyers.includes(the_user._id);
+
+          if (!B) {
+            res.status(404).send("you has no this products");
+          } else {
+            const removed = await Product.findByIdAndUpdate(
+              product._id,
+              { $pull: { buyers: the_user._id } },
+              { new: true }
+            );
+            const new_balance = the_user.balance + product.cost;
+            await User.findByIdAndUpdate(the_user._id, {
+              balance: new_balance,
+            });
+            if (!removed) {
+              return res.status(404).json({ message: "Post not found" });
+            }
+
+            res.status(200).json({
+              message: "Like removed",
+              info: {
+                you_selled: removed,
+                your_balance: new_balance,
+              },
+            });
+          }
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: "Server error" });
+        }
+      });
+    } else {
+      res.status(401).json({ message: "No token provided" });
+    }
+  } catch (error) {
+    res.send(error);
+    console.log(error);
+  }
+};
+
+module.exports = { addProduct, getProduct, buyProduct, sellProduct };
