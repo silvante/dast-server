@@ -161,4 +161,4 @@ const sellProduct = async (req, res) => {
   }
 };
 
-module.exports = { addProduct, getProduct, buyProduct, sellProduct };
+module.exports = { addProduct, getProduct, getProducts, buyProduct, sellProduct };
