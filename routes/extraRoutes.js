@@ -60,6 +60,7 @@ router.get("/profile", async (req, res) => {
             avatar,
             verificated,
             check,
+            balance,
           } = user;
           res.json({
             _id,
@@ -70,6 +71,7 @@ router.get("/profile", async (req, res) => {
             avatar,
             verificated,
             check,
+            balance,
           });
         } catch (error) {
           console.log(error);
