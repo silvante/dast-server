@@ -54,6 +54,10 @@ const comment = require("./routes/comments");
 // admin part
 const admin_main = require("./routes/admin");
 
+// store part
+const store = require("./store/store");
+const invertory = require("./store/inventory");
+
 // using routes
 app.use("/", router);
 app.use("/api/users", user);
@@ -65,6 +69,10 @@ app.use("/api/comments", comment);
 
 // admin use
 app.use("/admin/panel", admin_main);
+
+// store part use
+app.use("/store", store);
+app.use("/invertory", invertory);
 
 // Set the view engine to EJS
 app.set("view engine", "ejs");
