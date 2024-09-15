@@ -50,12 +50,13 @@ const createPost = async (req, res) => {
       jwt.verify(token, jwtSecret, {}, async (err, userDoc) => {
         if (err) throw err;
         try {
-          const { title, multitude, image, description } = req.body;
+          const { title, multitude, image, description, tags } = req.body;
           const new_post = await Post.create({
             creator: userDoc.id,
             title,
             multitude,
             image,
+            tags,
             description,
           });
           if (!new_post) {
@@ -91,14 +92,15 @@ const editPost = async (req, res) => {
           res.status(404).send("this post is not yours");
         } else {
           try {
-            const { title, desctiption, multitude } = req.body();
+            const { title, desctiption, multitude, tags } = req.body();
             const edited_post = await Post.findByIdAndUpdate(post._id, {
               title,
               desctiption,
               multitude,
+              tags,
             });
             if (!edited_post) {
-              res.status(404).send("editing editing...");
+              res.status(404).send("editing failed...");
             }
           } catch (error) {
             console.log(error);
