@@ -6,6 +6,7 @@ const connection = require("./db");
 const express = require("express");
 const app = express();
 const path = require("path");
+const rateLimit = require("express-rate-limit");
 
 // wallet_system
 
@@ -92,6 +93,13 @@ app.get("/", (req, res) => {
     message: "server side for web site Dast!",
   });
 });
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+
+app.use(limiter);
 
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));
