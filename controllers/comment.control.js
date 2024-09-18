@@ -1,7 +1,9 @@
 const Comment = require("../models/comment.model");
 const jwt = require("jsonwebtoken");
 const { jwtSecret } = require("../routes/extraRoutes");
+const User = require("../models/user.model");
 
+// will add coin when comments ("wallet_system")
 const createComment = async (req, res) => {
   const id = req.params.id;
   try {
@@ -21,6 +23,12 @@ const createComment = async (req, res) => {
             post_id: id,
             author: userDoc.id,
           });
+          if (comment) {
+            const new_balance = userDoc.balance + 5;
+            await User.findByIdAndUpdate(userDoc.id, {
+              balance: new_balance,
+            });
+          }
           return req.status(201).send(comment);
         } catch (error) {
           console.log(error);
