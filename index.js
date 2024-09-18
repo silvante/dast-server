@@ -89,8 +89,8 @@ app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
   res.render("index", {
-    title: "surface server",
-    message: "server side for web site surface!",
+    title: "dast server",
+    message: "server side for web site dast!",
   });
 });
 
