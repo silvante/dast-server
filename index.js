@@ -7,11 +7,19 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const rateLimit = require("express-rate-limit");
+const cors = require("cors");
 
 // wallet_system
 
 let gfs;
 connection();
+
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.DOMAIN,
+  })
+);
 
 const conn = mongoose.connection;
 conn.once("open", function () {

@@ -13,7 +13,7 @@ const jwtSecret = "dily_valentine_d34DJ058jsllass345dd";
 // login part codes
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.find({ email });
 
   if (!user) {
     return res.status(400).send("User not found");

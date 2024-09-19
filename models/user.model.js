@@ -22,6 +22,7 @@ const userSchame = mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   verificated: {
     type: Boolean,
