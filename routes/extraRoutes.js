@@ -13,25 +13,32 @@ const jwtSecret = "dily_valentine_d34DJ058jsllass345dd";
 // login part codes
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.find({ email });
 
-  if (!user) {
-    return res.status(400).send("User not found");
+  try {
+    // Use `findOne` to find a single user
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).send("User not found");
+    }
+
+    if (user.verificated !== true) {
+      return res.status(400).send("Your account is not verified");
+    }
+
+    const isMatch = await bcryptjs.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).send("Invalid credentials");
+    }
+
+    const token = jwt.sign({ id: user._id, email: user.email }, jwtSecret, {});
+
+    return res.send(token);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
   }
-
-  if (user.verificated !== true) {
-    res.status(400).send("your account is not verified");
-  }
-
-  const isMatch = await bcryptjs.compare(password, user.password);
-
-  if (!isMatch) {
-    return res.status(400).send("Invalid credentials");
-  }
-
-  const token = jwt.sign({ id: user._id, email: user.email }, jwtSecret, {});
-
-  res.send(token);
 });
 
 router.get("/profile", async (req, res) => {
