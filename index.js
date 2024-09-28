@@ -9,23 +9,31 @@ const path = require("path");
 const rateLimit = require("express-rate-limit");
 const cors = require("cors");
 const logger = require("./middleware/logger");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
 // wallet_system
 
-const morganFormat =
-  ":method :url :status :res[content-length] #--in_time--# :response-time ms";
+// const morganFormat =
+//   ":method :url :status :res[content-length] #--in_time--# :response-time ms";
 
 let gfs;
 connection();
 
-app.use(
-  morgan(morganFormat, {
-    stream: {
-      write: (message) => logger.info(message.trim()),
-    },
-  })
-);
+app.use((req, res, next) => {
+  const startHrTime = process.hrtime();
+
+  res.on("finish", () => {
+    const elapsedHrTime = process.hrtime(startHrTime);
+    const elapsedTimeInMs = (
+      elapsedHrTime[0] * 1000 +
+      elapsedHrTime[1] / 1e6
+    ).toFixed(2);
+    const logMessage = `[${req.method}] ${req.originalUrl} ${elapsedTimeInMs}ms`; // Add request method
+    logger.info(logMessage);
+  });
+
+  next();
+});
 
 app.use(
   cors({
