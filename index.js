@@ -8,11 +8,24 @@ const app = express();
 const path = require("path");
 const rateLimit = require("express-rate-limit");
 const cors = require("cors");
+const logger = require("./middleware/logger");
+const morgan = require("morgan");
 
 // wallet_system
 
+const morganFormat =
+  ":method :url :status :res[content-length] #--in_time--# :response-time ms";
+
 let gfs;
 connection();
+
+app.use(
+  morgan(morganFormat, {
+    stream: {
+      write: (message) => logger.info(message.trim()),
+    },
+  })
+);
 
 app.use(
   cors({
@@ -69,6 +82,7 @@ const invertory = require("./store/inventory");
 
 // recommendations
 const recommendations = require("./recommendations");
+const { stream } = require("winston");
 
 // using routes
 app.use("/", router);
