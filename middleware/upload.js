@@ -8,13 +8,13 @@ const storage = new GridFsStorage({
         const match = ["image/png", "image/jpeg"];
 
         if (match.indexOf(file.mimetype) === -1) {
-            const filename = `${Date.now()}-any-name-${file.originalname}`;
+            const filename = `${Date.now()}-dast_server-${file.originalname}`;
             return filename;
         }
 
         return {
             bucketName: "photos",
-            filename: `${Date.now()}-any-name-${file.originalname}`,
+            filename: `${Date.now()}-dast_server-${file.originalname}`,
         };
     },
 });

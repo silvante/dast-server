@@ -8,7 +8,7 @@ const router = express.Router();
 
 const User = require("../models/user.model");
 // const Comment = require("../models/comments.model");
-const jwtSecret = "dily_valentine_d34DJ058jsllass345dd";
+const jwtSecret = process.env.JWT_SECTER;
 
 // login part codes
 router.post("/login", async (req, res) => {
