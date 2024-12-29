@@ -147,4 +147,4 @@ const getAllLikes = async (req, res) => {
   }
 };
 
-module.exports = { getPostLikes, likePostById, unlikePost, getMyLikedPosts };
+module.exports = { getPostLikes, likePostById, unlikePost, getMyLikedPosts, getAllLikes };

@@ -16,6 +16,33 @@ const logger = require("./middleware/logger");
 // const morganFormat =
 //   ":method :url :status :res[content-length] #--in_time--# :response-time ms";
 
+// swaggers controllers
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API Documentation of dast',
+      version: '1.0.0',
+      description: 'specially for dast in 2024 and 2025'
+    },
+    servers: [
+      {
+        url: process.env.ORIGIN
+      }
+    ]
+  },
+  apis: ['./routes/*.js', "index.js"] // Path to API docs
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// swagger
+
 let gfs;
 connection();
 
@@ -92,6 +119,7 @@ const invertory = require("./store/inventory");
 // recommendations
 const recommendations = require("./recommendations");
 const { stream } = require("winston");
+const swaggerJSDoc = require("swagger-jsdoc");
 
 // using routes
 app.use("/", router);
