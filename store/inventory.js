@@ -79,3 +79,57 @@ router.put("/equip/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+/**
+ * @swagger
+ * /inventory:
+ *   get:
+ *     tags: ["Inventory"]
+ *     summary: Get all products in user's inventory
+ *     description: Fetches all products that the user has purchased (based on their JWT).
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of products in the user's inventory.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
+ *       401:
+ *         description: Unauthorized access, invalid or missing token.
+ *       404:
+ *         description: No products found for this user.
+ *       500:
+ *         description: Server error.
+ */
+
+
+/**
+ * @swagger
+ * /inventory/equip/{id}:
+ *   put:
+ *     tags: ["Inventory"]
+ *     summary: Equip a product in the user's inventory
+ *     description: Allows the user to equip an item from their inventory (only if they own it).
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the product to equip.
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The item is successfully equipped.
+ *       401:
+ *         description: Unauthorized access, invalid or missing token.
+ *       404:
+ *         description: Product not found or the user does not own it.
+ *       500:
+ *         description: Server error.
+ */

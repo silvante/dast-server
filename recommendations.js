@@ -79,3 +79,54 @@ router.get("/", async (req, res) => {
 });
 
 module.exports = router;
+
+/**
+ * @swagger
+ * /recommendations:
+ *   get:
+ *     tags: ["Recommendations"]
+ *     summary: Get recommended posts based on user interactions.
+ *     description: Fetches recommended posts for a user based on their likes, saves, and comments.
+ *     responses:
+ *       200:
+ *         description: List of recommended posts based on tags.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Post'
+ *       205:
+ *         description: No interactions found, returning all posts.
+ *       401:
+ *         description: Invalid token or no token provided.
+ *       500:
+ *         description: Server error.
+ *       404:
+ *         description: Error occurred during processing.
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Post:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         title:
+ *           type: string
+ *         content:
+ *           type: string
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
