@@ -247,14 +247,16 @@ const resendOTP = async (req, res) => {
   }
 };
 
-const clearUsers = async (req, res) =>{
+const clearUsers = async (req, res) => {
   try {
-    await User.deleteMany({}).then(() => {res.status(202).send("barcha userlar ochirildi")}).catch(() => {res.status(404).send("barcha userlar ochirildi")})
+    await User.deleteMany({});
+    res.status(202).send("Barcha userlar o'chirildi");
   } catch (err) {
-    console.log(err);
-    res.send(err)
+    console.error(err);
+    res.status(500).send("Foydalanuvchilarni o'chirishda xatolik yuz berdi");
   }
-}
+};
+
 
 module.exports = {
   getUser,
