@@ -79,6 +79,7 @@ const multitude = require("./routes/multitude");
 const post = require("./routes/post");
 const follow = require("./routes/follows");
 const save = require("./routes/saves");
+const likes = require("./routes/likes");
 const comment = require("./routes/comments");
 
 // admin part
@@ -99,6 +100,7 @@ app.use("/api/multitude", multitude);
 app.use("/api/posts", post);
 app.use("/system/follows", follow);
 app.use("/system/saves", save);
+app.use("/system/likes", likes);
 app.use("/api/comments", comment);
 
 // admin use
