@@ -51,6 +51,9 @@ const createPost = async (req, res) => {
         if (err) throw err;
         try {
           const { title, multitude, image, description, tags } = req.body;
+          if (title == null || description == null || multitude == null || image == null) {
+            return res.status(404).send({message: "enter all the required fields"})
+          }
           const new_post = await Post.create({
             creator: userDoc.id,
             title,

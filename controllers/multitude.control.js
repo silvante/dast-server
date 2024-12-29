@@ -41,6 +41,9 @@ const addMultitude = async (req, res) => {
         }
         try {
           const { title, description, banner, icon } = req.body;
+          if (title == null || description == null || banner == null || icon == null) {
+            return res.status(404).send({message: "enter all the required fields"})
+          }
           const newMultitude = await Multitude.create({
             title,
             description,

@@ -43,6 +43,10 @@ const addUser = async (req, res) => {
   try {
     const { name, username, email, bio, password, avatar } = req.body;
 
+    if (name == null || email == null || username == null || password == null) {
+      return res.status(404).json({message: "enter all the required fields"})
+    }
+
     const existingEmail = await User.find({ email });
     const existingUsername = await User.find({ username });
 
@@ -51,7 +55,7 @@ const addUser = async (req, res) => {
       return;
     }
     if (existingUsername.length >= 1) {
-      res.send("username is already taken");
+      res.status(404).send("username is already taken");
       return;
     } else {
       const newUser = await new User({
