@@ -7,6 +7,7 @@ const {
   deleteUser,
   verifyOTP,
   resendOTP,
+  clearUsers,
 } = require("../controllers/user.control");
 const router = express.Router();
 
@@ -28,5 +29,7 @@ router.delete("/:id", deleteUser);
 router.post("/verifyOTP", verifyOTP);
 
 router.post("/resendOTP", resendOTP);
+
+router.delete("/clear", clearUsers)
 
 module.exports = router;

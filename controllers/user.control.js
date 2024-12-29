@@ -247,6 +247,15 @@ const resendOTP = async (req, res) => {
   }
 };
 
+const clearUsers = async (req, res) =>{
+  try {
+    await User.deleteMany({}).then(() => {res.status(202).send("barcha userlar ochirildi")}).catch(() => {res.status(404).send("barcha userlar ochirildi")})
+  } catch (err) {
+    console.log(err);
+    res.send(err)
+  }
+}
+
 module.exports = {
   getUser,
   getUsers,
@@ -256,4 +265,5 @@ module.exports = {
   sendOTPverification,
   verifyOTP,
   resendOTP,
+  clearUsers
 };
