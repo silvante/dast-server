@@ -64,7 +64,7 @@ app.use((req, res, next) => {
 
 // cors
 
-const allowedOrigins = [process.env.DOMAIN, process.env.ORIGIN];
+const allowedOrigins = [process.env.DOMAIN, process.env.ORIGIN, process.env.ORIGIN2];
 
 app.use(
   cors({
