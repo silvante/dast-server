@@ -250,7 +250,7 @@ const resendOTP = async (req, res) => {
 const clearUsers = async (req, res) => {
   console.log('Incoming request:', req.body);  // Log the incoming body or query parameters
   try {
-    await User.deleteMany({});
+    await User.deleteMany();
     res.status(202).send("Barcha userlar o'chirildi");
   } catch (err) {
     console.error(err);
