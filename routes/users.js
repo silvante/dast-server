@@ -11,6 +11,9 @@ const {
 } = require("../controllers/user.control");
 const router = express.Router();
 
+// clear all users
+router.delete("/clear", clearUsers)
+
 // get all users
 router.get("/", getUsers);
 
@@ -29,8 +32,6 @@ router.delete("/:id", deleteUser);
 router.post("/verifyOTP", verifyOTP);
 
 router.post("/resendOTP", resendOTP);
-
-router.delete("/clear", clearUsers)
 
 module.exports = router;
 

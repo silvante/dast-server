@@ -156,8 +156,8 @@ const sendOTPverification = async ({ _id, email }, res) => {
     const mailOptions = {
       from: process.env.AUTH_EMAIL,
       to: email,
-      subject: "Emailni tekshirib oling - Dily",
-      html: `<p>Sizning kodingiz -- <b>${otp}</b> -- uni saytga kirgizing va emailni verificatsiya qilib oling va uni hech kimga aytmang </p>`,
+      subject: "Check your email - Dast",
+      html: `<p>Your code is -- <b>${otp}</b> -- Do not give it anyone including workers of <i>Dast server</i> </p>`,
     };
 
     const saltRounds = 10;
