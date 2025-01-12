@@ -7,7 +7,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const rateLimit = require("express-rate-limit");
-// const cors = require("cors");
+const cors = require("cors");
 const logger = require("./middleware/logger");
 // const morgan = require("morgan");
 
@@ -64,19 +64,26 @@ app.use((req, res, next) => {
 
 // cors
 
-// const allowedOrigins = [process.env.DOMAIN, process.env.ORIGIN, process.env.ORIGIN2];
+const allowedOrigins = [process.env.DOMAIN, process.env.ORIGIN, process.env.ORIGIN2];
 
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//   })
-// );
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 const conn = mongoose.connection;
 conn.once("open", function () {
   gfs = Grid(conn.db, mongoose.mongo);
