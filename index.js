@@ -66,17 +66,17 @@ app.use((req, res, next) => {
 
 const allowedOrigins = [process.env.DOMAIN, process.env.ORIGIN, process.env.ORIGIN2];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//   })
+// );
 const conn = mongoose.connection;
 conn.once("open", function () {
   gfs = Grid(conn.db, mongoose.mongo);
