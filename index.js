@@ -7,7 +7,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const rateLimit = require("express-rate-limit");
-const cors = require("cors");
+// const cors = require("cors");
 const logger = require("./middleware/logger");
 // const morgan = require("morgan");
 
@@ -64,7 +64,7 @@ app.use((req, res, next) => {
 
 // cors
 
-const allowedOrigins = [process.env.DOMAIN, process.env.ORIGIN, process.env.ORIGIN2];
+// const allowedOrigins = [process.env.DOMAIN, process.env.ORIGIN, process.env.ORIGIN2];
 
 // app.use(
 //   cors({
